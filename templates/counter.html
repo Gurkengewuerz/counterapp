@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zähler - {{ counter.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ counter.name }}</h1>
+        <div id="counter-display">{{ counter.value }}</div>
+        <button id="increment-btn">Erhöhen</button>
+        <button id="decrement-btn">Verringern</button>
+    </div>
+    <script>
+        var counterName = "{{ counter.name }}";
+    </script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

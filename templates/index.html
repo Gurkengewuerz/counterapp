@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zählerliste</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Zählerliste</h1>
+        <form action="{{ url_for('create') }}" method="post">
+            <input type="text" name="name" placeholder="Neuer Zählername" required>
+            <button type="submit">Erstellen</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for counter in counters %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('counter', name=counter.name) }}">{{ counter.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('history', id=counter.id) }}" >
+                            <button type="button" style="display:inline;text-decoration: none;">Diagramm</button>
+                        </a>
+                        <form action="{{ url_for('delete', name=counter.name) }}" method="post" style="display:inline;">
+                            <button type="submit">Löschen</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
