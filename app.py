@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from datetime import datetime
+from werkzeug.middleware.proxy_fix import ProxyFix
 import threading
 
 app = Flask(__name__)
@@ -10,6 +11,9 @@ app.config['SECRET_KEY'] = 'secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///counter.db'
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
+
+# ProxyFix hinzufügen
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
 
 # Initialisiere ein Lock-Objekt
 locks = {}
