@@ -9,6 +9,7 @@ import threading
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///counter.db'
+app.config.from_prefixed_env("APP")
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
 
