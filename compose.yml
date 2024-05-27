@@ -1,0 +1,25 @@
+services:
+  counterapp:
+    container_name: counterapp
+    image: ghcr.io/gurkengewuerz/counterapp:develop
+    restart: unless-stopped
+    networks: [traefik]
+    volumes:
+      - "./data:/app/instance"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.counterapp.entrypoints=websecure"
+      - "traefik.http.routers.counterapp.rule=HOST(`$VIRTUAL_HOST`)"
+      - "traefik.http.routers.counterapp.service=counterapp-srv"
+      - "traefik.http.services.counterapp-srv.loadbalancer.server.port=5000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+networks:
+  traefik:
+    external: true
